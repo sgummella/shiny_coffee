@@ -14,8 +14,8 @@ shinyUI(dashboardPage(skin = "green",
   dashboardSidebar(
     sidebarUserPanel("Sashank Gummella",
                      image = "https://producttable.barn2.co.uk/wp-content/uploads/2017/06/Coffee-Beans.jpg"),
-    siderbarMenu(
-      menuItem("Overview", tabName = "intro", icon = icon("mug-hot")),
+    sidebarMenu(
+      menuItem("Overview", tabName = "intro", icon = icon("mug")),
       menuItem("Global Map", tabName = "map", icon = icon("globe-africa")),
       menuItem("Time Series", tabName = "data", icon = icon("hourglass-half")),
       menuItem("Recap", tabName = "recap", icon = icon("rev")),
@@ -73,27 +73,25 @@ shinyUI(dashboardPage(skin = "green",
                 )
               )
               
-              )
+              ),
       #creating global map tabItem
       tabItem(tabName = 'map',
               h2('Coffee Production and Consumption 1990-2017'),
               fluidRow(
-                column(
-                  width = 1),
-                  
-                  column(width = 1,
+                  box(
+                    width = 2,
                     title = 'Select Input',
                     solidHeader = T,
                     status = 'success',
                     selectInput(inputId = "year_harvest",
                       label = "Select a Year",
-                      choices = as.character(coffee$SEASON),
+                      choices = unique(sorted_coffee$Season),
                       selected = NULL,
                       # options = list(actions-box = TRUE),
                       multiple = FALSE
                     )
                   ),
-              column(width = 11, plotlyOutput("coffee_map", height = 700), solidHeader = TRUE, status = 'success')
+              column(width = 10, plotlyOutput("map", height = 700), solidHeader = TRUE, status = 'success')
               )
               ),
       #creating time series / data tabItem
@@ -106,33 +104,32 @@ shinyUI(dashboardPage(skin = "green",
                 title = 'Select Input',
                 solidHeader = T,
                 status = 'success',
-                pickerInput(
-                  "stat-country",
-                  "Select a Statistc",
+                selectizeInput(
+                  "stat_country",
+                  label = "Select a Statistic",
                   choices = as.character(stats),
-                  selected = as.character(stats),
-                  options = list(actions-box = TRUE),
-                  multiple = T
-                ),
-                pickerInput(
+                  selected = NULL),
+                selectizeInput(
                   "country",
-                  "Select a Country",
-                  choices = as.character(unique(coffee$COUNTRY)),
-                  selected = as.character(unique(coffee$COUNTRY)),
-                  options = list(actions-box = TRUE),
-                  multiple= T
+                  label = "Select a Country",
+                  choices = as.character(unique(sorted_coffee$Country)),
+                  selected = NULL)
+              
                 )
-              ),
+                ),
+        
+              
               column(
                 width = 8,
                 box(
                   title = 'Crop Data by Year and Country',
                   status = 'success',
                   solidHeader = T,
-                  plotlyOutput('<fill in with graph>'),
+                  plotlyOutput('country_season_line'),
                   width = NULL
                 )
               )
+             
               ),
             fluidRow(
               column(
@@ -141,40 +138,44 @@ shinyUI(dashboardPage(skin = "green",
                 title = 'Select Input',
                 status = 'primary',
                 solidHeader = T,
-                pickerInput(
-                  'mean-stats',
-                  "Select an Average",
-                  choices = as.character(colnames(mean_stats_year)),
-                  selected = as.character(colnames(mean_stats_year)),
-                  options = list(actions-box = TRUE),
-                  multiple = T
+                selectizeInput(
+                  'mean',
+                  label = "Select an Average",
+                  choices = as.character(colnames(mean_stats)),
+                  selected = NULL
+                  # options = list(actions-box = TRUE)
                 )
-              ),
+              )),
               column(
                 width = 8,
                 box(
                   title = "Mean Crop Data by Year",
                   status= 'success',
                   solidHeader = T,
-                  plotlyOutput('fill in with graph'),
+                  plotlyOutput('mean_season_line'),
                   width = NULL
                 )
               )
-            )),
+            ),
             fluidRow(
-              column(
-                width = 12,
                 box(
-                  title = 'Coffee Data Table',
+                  width = 6,
+                  title = 'Coffee Data by Season and Country',
                   status = 'success',
                   solidHeader = T,
-                  width = NULL,
-                  dataTableOutput('coffee')
-                ) 
-              )
-            )
+                  # width = NULL,
+                  dataTableOutput('country_season_table')
+                ), 
+                box(
+                  width = 6,
+                  title = 'Mean Coffee Data by Season',
+                  status = 'success',
+                  solidHeader=T,
+                  dataTableOutput('mean_season_table')
+                )
+              )),
             
-            )),
+            
       #creating tabItem recap / future work
       tabItem(tabName = "recap",
               fluidRow(
@@ -208,4 +209,5 @@ shinyUI(dashboardPage(skin = "green",
               )
       )
   )
-))
+    )
+)
