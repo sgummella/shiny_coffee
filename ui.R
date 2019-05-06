@@ -15,12 +15,12 @@ shinyUI(dashboardPage(skin = "green",
     sidebarUserPanel("Sashank Gummella",
                      image = "https://producttable.barn2.co.uk/wp-content/uploads/2017/06/Coffee-Beans.jpg"),
     sidebarMenu(
-      menuItem("Overview", tabName = "intro", icon = icon("mug")),
+      menuItem("Overview", tabName = "intro", icon = icon("coffee")),
       menuItem("Global Map", tabName = "map", icon = icon("globe-africa")),
       menuItem("Time Series", tabName = "data", icon = icon("hourglass-half")),
       menuItem("Recap", tabName = "recap", icon = icon("rev")),
       #creating menuItem link tab to github repo
-      menuItem("Github Repo", href = "https://github.com/sgummella/shiny_zappos.git", icon = icon("github")))
+      menuItem("Github Repository", href = "https://github.com/sgummella/shiny_zappos.git", icon = icon("github")))
    
     ),
   dashboardBody(
@@ -52,7 +52,7 @@ shinyUI(dashboardPage(skin = "green",
                     solidHeader = T,
                     width = NULL,
                     h4(
-                      'This dataset, provided by the International Coffee Organization, combines annual data from 56 member state nations from 1990 to 2017. It presents a few statistics, such as, total production, domestic consumption, exportable production, and gross opening stocks. All of these statistics are given in thousands of 60 kg bags. The International Coffee Organization (ICO) is the primary intergovernmental organization for the global coffee market. It oversees nearly all of the coffee production market and two-thirds of global coffee consumption. This dataset was found on the Kaggle website, but was cleaned and mutated by me for this project\'s purposes. Total production and domestic consumption are self-explanatory. Exportable production is the difference of total production and domestic consumption. Gross opening stock is the amount of coffee held by a coffee producing country\'s producers, processors, traders and exporters at the beginning of a crop year. Coffee stocks could be held if there\'s a surplus to export requirements or to ensure an orderly flow of exports.'
+                      'This dataset, provided by the International Coffee Organization, combines annual data from 56 member state nations from 1990 to 2017. It presents a few statistics, such as, total production, domestic consumption, exportable production, and gross opening stocks. All of these statistics are given in thousands of 60 kg bags. The International Coffee Organization (ICO) is the primary intergovernmental organization for the global coffee market. It oversees nearly all of the coffee production market and two-thirds of global coffee consumption. This dataset was found on the Kaggle website, but was cleaned and mutated by me for this project\'s purposes. \nTotal production and domestic consumption are self-explanatory.\n Exportable production is the difference of total production and domestic consumption.\n Gross opening stock is the amount of coffee held by a coffee producing country\'s producers, processors, traders and exporters at the beginning of a crop year. Coffee stocks could be held if there\'s a surplus to export requirements or to ensure an orderly flow of exports.'
                     )
                   )
                 )
@@ -85,7 +85,7 @@ shinyUI(dashboardPage(skin = "green",
                     status = 'success',
                     selectInput(inputId = "year_harvest",
                       label = "Select a Year",
-                      choices = unique(sorted_coffee$Season),
+                      choices = Year,
                       selected = NULL,
                       # options = list(actions-box = TRUE),
                       multiple = FALSE
@@ -97,10 +97,7 @@ shinyUI(dashboardPage(skin = "green",
       #creating time series / data tabItem
       tabItem(tabName = "data",
           fluidRow(
-            column(
-              width=4,
-            
-              box(
+              box(width = 4,
                 title = 'Select Input',
                 solidHeader = T,
                 status = 'success',
@@ -114,49 +111,41 @@ shinyUI(dashboardPage(skin = "green",
                   label = "Select a Country",
                   choices = as.character(unique(sorted_coffee$Country)),
                   selected = NULL)
-              
-                )
+                # infoBoxOutput("maxBox")
                 ),
-        
-              
-              column(
-                width = 8,
-                box(
+              infoBoxOutput("maxBox"),
+              infoBoxOutput("minBox")
+          ),
+          fluidRow(
+                box(width = 12,
                   title = 'Crop Data by Year and Country',
                   status = 'success',
                   solidHeader = T,
-                  plotlyOutput('country_season_line'),
-                  width = NULL
+                  plotlyOutput('country_season_line')
                 )
-              )
-             
               ),
             fluidRow(
-              column(
-              width=4,
-              box(
+              box(width = 4,
                 title = 'Select Input',
-                status = 'primary',
+                status = 'success',
                 solidHeader = T,
                 selectizeInput(
                   'mean',
                   label = "Select an Average",
                   choices = as.character(colnames(mean_stats)),
-                  selected = NULL
-                  # options = list(actions-box = TRUE)
-                )
-              )),
-              column(
-                width = 8,
-                box(
+                  selected = NULL)),
+                infoBoxOutput("maxBoxMean"),
+                infoBoxOutput("minBoxMean")
+              ),
+            fluidRow(
+                box(width = 12,
                   title = "Mean Crop Data by Year",
                   status= 'success',
                   solidHeader = T,
-                  plotlyOutput('mean_season_line'),
-                  width = NULL
-                )
+                  plotlyOutput('mean_season_line')
               )
             ),
+      
             fluidRow(
                 box(
                   width = 6,
