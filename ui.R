@@ -20,7 +20,7 @@ shinyUI(dashboardPage(skin = "green",
       menuItem("Time Series", tabName = "data", icon = icon("hourglass-half")),
       menuItem("Recap", tabName = "recap", icon = icon("rev")),
       #creating menuItem link tab to github repo
-      menuItem("Github Repository", href = "https://github.com/sgummella/shiny_zappos.git", icon = icon("github")))
+      menuItem("Github Repository", href = "https://github.com/sgummella/shiny_zappos", icon = icon("github")))
    
     ),
   dashboardBody(
@@ -176,11 +176,17 @@ shinyUI(dashboardPage(skin = "green",
                     solidHeader = T,
                     width = NULL,
                     h4(
-                      ''
-                    )
+                      'In general, a trend I am seeing is that South American, Carribean, and some Central American nations have been consuming more coffee domestically over the recent couple of decades. As a result, most have been exporting less. Brazil was able to offset this deficit by producing more coffee. '
+                    ),
+                    h4(
+                      'South America used to be the biggest player in coffee production. In Africa, nations have been producing more coffee to export in the last couple of decades. Countries, such as, Ghana, Zambia, Togo have either raised exportable production or maintained high export over this time period.'
+                    ),
+                    h4(
+                      'Countries in South America, Africa, and Asia are producing much more coffee to meet higher domestic consumption. The whole world, as a collective, is drinking A LOT more coffee! As a result of this, gross opening stocks are decreasing steadily to meet both domestic and overseas demands. Changes in countries\' domestic consumptions noted around 1997-1999.'
+                      
                   )
                 )
-              ),
+              )),
               fluidRow(
                 column(
                   width = 12,
@@ -190,7 +196,10 @@ shinyUI(dashboardPage(skin = "green",
                     solidHeader = T,
                     width = NULL,
                     h4(
-                      ''
+                      'If I had more time, I would tap into coffee import datasets to see how coffee is distributed globally. This would help piece where coffee is being sent to and who the biggest importers are. America and Europe are undoubtedly biggest consumers in the world, but won\'t know for sure until I merge with an imports dataset.'
+                    ),
+                    h4(
+                      'An imports dataset that tells me where countries are importing their coffee from would give insight into the economies of coffee producing countries and help explain global trends, such as, why some countries consume less than others.'
                     )
                   )
                 )

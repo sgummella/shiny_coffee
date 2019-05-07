@@ -52,7 +52,7 @@ coffee_merge$Season <- as.numeric(coffee_merge$Season)
 # sorted_coffee = coffee_merge %>% group_by(., Season)
 # sorted_coffee <- sorted_coffee[order(sorted_coffee$Season), ]
 # sorted_coffee <- sorted_coffee %>% rename(., "Total_Production" = "TOTAL_PRODUCTION")
-sorted_coffee <- coffee_merge %>% mutate(., Text = paste("Harvest Month:", '\t', Month, '\n',"Total Production:",'\t'  ,`Total_Production`,'\n',"Domestic Consumption:",
+sorted_coffee <- coffee_merge %>% mutate(., Text = paste("Country:", "\t", Country,'\n', 'Harvest Month:', '\t', Month, '\n',"Total Production:",'\t'  ,`Total_Production`,'\n',"Domestic Consumption:",
                                                           '\t',`Domestic_Consumption`,'\n', "Exportable Production:", "\t",
                                                           `Exportable_Production`,"\n","Gross Opening Stocks:","\t", `Gross_Opening_Stocks`))
 # sorted_coffee <- sorted_coffee %>% rename(., "Total Production" = "TOTAL_PRODUCTION")
