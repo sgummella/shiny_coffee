@@ -62,4 +62,6 @@ mean_stats <- mean_stats_year[c(-1)]
 stats = colnames(sorted_coffee)
 stats = stats[c(-1,-2,-3,-11,-12,-13)]
 Year <- sorted_coffee %>% arrange(Season) %>% select(Season)
-Year <- unique(Season)
+Year <- unique(Year)
+
+# link to shinyapp: https://sgummella.shinyapps.io/Coffee_Beans/

@@ -1,0 +1,13 @@
+name: Coffee_Beans
+title: Coffee_Beans
+username:
+account: sgummella
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 915459
+bundleId: 2067155
+url: https://sgummella.shinyapps.io/Coffee_Beans/
+when: 1557249843.55795
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: country_centroids_az8.xls
